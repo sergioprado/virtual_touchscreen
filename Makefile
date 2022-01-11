@@ -2,12 +2,17 @@
 # Makefile for the virtual touchscreen driver.
 #
 
-KDIR ?= /lib/modules/`uname -r`/build
+KERNEL_SRC ?= /lib/modules/`uname -r`/build
 
 obj-m := virtual_touchscreen.o
 
+SRC := $(shell pwd)
+
 default:
-	$(MAKE) -C $(KDIR) M=$$PWD modules
+	$(MAKE) -C $(KERNEL_SRC) M=$(SRC) modules
+
+modules_install:
+	$(MAKE) -C $(KERNEL_SRC) M=$(SRC) modules_install
 
 clean:
 	rm -f *.o *.cmd *.mod.c .*.o* .*.ko* *~ *.ko Module.markers modules.order Module.symvers 
